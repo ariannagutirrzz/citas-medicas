@@ -1,0 +1,83 @@
+<div class="dashboard-home">
+  <div class="welcome-section">
+    <h1>{{ getWelcomeMessage() }}</h1>
+    <p class="subtitle">Sistema de Gestión de Citas Médicas</p>
+    <div class="user-info">
+      <mat-chip-option color="accent" selected>
+        {{ getRoleLabel(currentUser?.roles || '') }}
+      </mat-chip-option>
+    </div>
+  </div>
+
+  <div class="quick-stats" fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="start start">
+    <mat-card class="stat-card" fxFlex>
+      <mat-card-content>
+        <div class="stat-icon">
+          <mat-icon>event</mat-icon>
+        </div>
+        <div class="stat-info">
+          <h3>Citas</h3>
+          <p>Gestionar citas médicas</p>
+        </div>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button routerLink="/dashboard/citas">Ver Citas</button>
+      </mat-card-actions>
+    </mat-card>
+
+    <mat-card class="stat-card" fxFlex *ngIf="authService.hasAnyRole(['admin', 'paciente'])">
+      <mat-card-content>
+        <div class="stat-icon">
+          <mat-icon>people</mat-icon>
+        </div>
+        <div class="stat-info">
+          <h3>Pacientes</h3>
+          <p>Gestionar información de pacientes</p>
+        </div>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button routerLink="/dashboard/pacientes">Ver Pacientes</button>
+      </mat-card-actions>
+    </mat-card>
+
+    <mat-card class="stat-card" fxFlex *ngIf="authService.hasAnyRole(['admin', 'doctor'])">
+      <mat-card-content>
+        <div class="stat-icon">
+          <mat-icon>medical_services</mat-icon>
+        </div>
+        <div class="stat-info">
+          <h3>Registros Médicos</h3>
+          <p>Gestionar historiales médicos</p>
+        </div>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button routerLink="/dashboard/registros">Ver Registros</button>
+      </mat-card-actions>
+    </mat-card>
+
+    <mat-card class="stat-card" fxFlex *ngIf="authService.hasRole('admin')">
+      <mat-card-content>
+        <div class="stat-icon">
+          <mat-icon>admin_panel_settings</mat-icon>
+        </div>
+        <div class="stat-info">
+          <h3>Usuarios</h3>
+          <p>Gestionar usuarios del sistema</p>
+        </div>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button routerLink="/dashboard/usuarios">Ver Usuarios</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+
+  <div class="recent-activity" *ngIf="authService.hasAnyRole(['admin', 'doctor', 'paciente'])">
+    <h2>Actividad Reciente</h2>
+    <mat-card>
+      <mat-card-content>
+        <p>Aquí se mostrarán las citas y actividades recientes.</p>
+        <p>Funcionalidad en desarrollo...</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div> 

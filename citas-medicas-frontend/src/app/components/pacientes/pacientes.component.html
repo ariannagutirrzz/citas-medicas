@@ -1,0 +1,88 @@
+<div class="pacientes-container">
+  <div class="header" fxLayout="row" fxLayoutAlign="space-between center">
+    <h2>Gestión de Pacientes</h2>
+    <button mat-raised-button color="primary" (click)="openPacienteForm()">
+      <mat-icon>add</mat-icon>
+      Nuevo Paciente
+    </button>
+  </div>
+
+  <mat-card>
+    <mat-card-content>
+      <mat-form-field appearance="outline" class="search-field">
+        <mat-label>Buscar pacientes</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Buscar por nombre, cédula, email...">
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+
+      <div class="table-container mat-elevation-z8">
+        <table mat-table [dataSource]="dataSource" matSort>
+          <!-- Nombres Column -->
+          <ng-container matColumnDef="nombres">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombres </th>
+            <td mat-cell *matCellDef="let paciente"> {{ paciente.nombres }} </td>
+          </ng-container>
+
+          <!-- Apellidos Column -->
+          <ng-container matColumnDef="apellidos">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Apellidos </th>
+            <td mat-cell *matCellDef="let paciente"> {{ paciente.apellidos }} </td>
+          </ng-container>
+
+          <!-- Email Column -->
+          <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
+            <td mat-cell *matCellDef="let paciente"> {{ paciente.email }} </td>
+          </ng-container>
+
+          <!-- Cédula Column -->
+          <ng-container matColumnDef="cedula">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Cédula </th>
+            <td mat-cell *matCellDef="let paciente"> {{ paciente.cedula }} </td>
+          </ng-container>
+
+          <!-- Historia Médica Column -->
+          <ng-container matColumnDef="historia_medica">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Historia Médica </th>
+            <td mat-cell *matCellDef="let paciente"> 
+              <span *ngIf="paciente.historia_medica; else noHistoria">
+                {{ paciente.historia_medica | slice:0:50 }}{{ paciente.historia_medica.length > 50 ? '...' : '' }}
+              </span>
+              <ng-template #noHistoria>
+                <span class="no-data-text">Sin historia médica</span>
+              </ng-template>
+            </td>
+          </ng-container>
+
+          <!-- Acciones Column -->
+          <ng-container matColumnDef="acciones">
+            <th mat-header-cell *matHeaderCellDef> Acciones </th>
+            <td mat-cell *matCellDef="let paciente">
+              <button mat-icon-button color="primary" (click)="editPaciente(paciente)" matTooltip="Editar">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button color="warn" (click)="deletePaciente(paciente)" matTooltip="Eliminar">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Seleccionar página de pacientes"></mat-paginator>
+
+        <div class="loading-container" *ngIf="loading">
+          <mat-spinner></mat-spinner>
+          <p>Cargando pacientes...</p>
+        </div>
+
+        <div class="no-data" *ngIf="!loading && dataSource.data.length === 0">
+          <mat-icon>people_outline</mat-icon>
+          <p>No hay pacientes registrados</p>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div> 

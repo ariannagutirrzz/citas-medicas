@@ -1,0 +1,28 @@
+.usuario-form-container {
+  padding: 20px;
+  max-width: 100%;
+}
+
+.full-width {
+  width: 100%;
+}
+
+mat-form-field {
+  margin-bottom: 16px;
+}
+
+mat-dialog-actions {
+  padding-top: 20px;
+}
+
+button[type="submit"] {
+  min-width: 120px;
+}
+
+mat-spinner {
+  margin-right: 8px;
+}
+
+.password-toggle {
+  cursor: pointer;
+} 

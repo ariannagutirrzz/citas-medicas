@@ -1,0 +1,78 @@
+.citas-container {
+  padding: 20px;
+}
+
+.header {
+  margin-bottom: 20px;
+}
+
+.header h2 {
+  margin: 0;
+  color: #333;
+  font-weight: 500;
+}
+
+.search-field {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.table-container {
+  position: relative;
+  min-height: 400px;
+}
+
+table {
+  width: 100%;
+}
+
+.mat-column-acciones {
+  width: 120px;
+  text-align: center;
+}
+
+.mat-column-fecha {
+  width: 120px;
+}
+
+.mat-column-hora {
+  width: 100px;
+}
+
+.mat-column-estado {
+  width: 120px;
+}
+
+.loading-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.loading-container p {
+  margin-top: 16px;
+  color: #666;
+}
+
+.no-data {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: #666;
+}
+
+.no-data mat-icon {
+  font-size: 48px;
+  width: 48px;
+  height: 48px;
+  margin-bottom: 16px;
+}
+
+.no-data p {
+  margin: 0;
+  font-size: 16px;
+} 

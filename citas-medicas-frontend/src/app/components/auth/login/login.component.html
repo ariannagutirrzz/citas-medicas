@@ -1,0 +1,55 @@
+<div class="login-container" fxLayout="column" fxLayoutAlign="center center">
+  <mat-card class="login-card">
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon class="title-icon">medical_services</mat-icon>
+        Citas Médicas Express
+      </mat-card-title>
+      <mat-card-subtitle>Iniciar Sesión</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" fxLayout="column" fxLayoutGap="20px">
+        <mat-form-field appearance="outline">
+          <mat-label>Cédula</mat-label>
+          <input matInput formControlName="cedula" placeholder="123456">
+          <mat-icon matSuffix>badge</mat-icon>
+          <mat-error *ngIf="loginForm.get('cedula')?.hasError('required')">
+            La cédula es requerida
+          </mat-error>
+          <mat-error *ngIf="loginForm.get('cedula')?.hasError('pattern')">
+            La cédula debe tener al menos 6 dígitos
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Contraseña</mat-label>
+          <input matInput formControlName="contraseña" type="password" placeholder="Ingrese su contraseña">
+          <mat-icon matSuffix>lock</mat-icon>
+          <mat-error *ngIf="loginForm.get('contraseña')?.hasError('required')">
+            La contraseña es requerida
+          </mat-error>
+          <mat-error *ngIf="loginForm.get('contraseña')?.hasError('minlength')">
+            La contraseña debe tener al menos 6 caracteres
+          </mat-error>
+        </mat-form-field>
+
+        <button 
+          mat-raised-button 
+          color="primary" 
+          type="submit" 
+          [disabled]="loginForm.invalid || loading"
+          fxLayoutAlign="center">
+          <mat-spinner diameter="20" *ngIf="loading"></mat-spinner>
+          <span *ngIf="!loading">Iniciar Sesión</span>
+        </button>
+      </form>
+    </mat-card-content>
+
+    <mat-card-actions fxLayoutAlign="center">
+      <button mat-button routerLink="/register">
+        ¿No tienes cuenta? Regístrate
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div> 

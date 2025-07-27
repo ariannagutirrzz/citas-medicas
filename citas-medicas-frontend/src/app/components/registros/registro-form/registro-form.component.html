@@ -1,0 +1,56 @@
+<div class="registro-form-container">
+  <h2 mat-dialog-title>
+    <mat-icon>{{ isEditMode ? 'edit' : 'add' }}</mat-icon>
+    {{ isEditMode ? 'Editar' : 'Nuevo' }} Registro Médico
+  </h2>
+
+  <form [formGroup]="registroForm" (ngSubmit)="onSubmit()">
+    <mat-dialog-content>
+      <div fxLayout="row" fxLayoutGap="20px">
+        <mat-form-field appearance="outline" fxFlex>
+          <mat-label>Paciente</mat-label>
+          <mat-select formControlName="id_paciente">
+            <mat-option *ngFor="let paciente of pacientes" [value]="paciente.id_paciente">
+              {{ paciente.nombres }} {{ paciente.apellidos }} - {{ paciente.cedula }}
+            </mat-option>
+          </mat-select>
+          <mat-error>{{ getErrorMessage('id_paciente') }}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" fxFlex>
+          <mat-label>Fecha</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="fecha">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error>{{ getErrorMessage('fecha') }}</mat-error>
+        </mat-form-field>
+      </div>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Diagnóstico</mat-label>
+        <textarea matInput formControlName="diagnosis" rows="3" placeholder="Describa el diagnóstico del paciente..."></textarea>
+        <mat-error>{{ getErrorMessage('diagnosis') }}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Tratamiento</mat-label>
+        <textarea matInput formControlName="tratamiento" rows="3" placeholder="Describa el tratamiento prescrito..."></textarea>
+        <mat-error>{{ getErrorMessage('tratamiento') }}</mat-error>
+      </mat-form-field>
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end">
+      <button mat-button type="button" (click)="onCancel()" [disabled]="loading">
+        Cancelar
+      </button>
+      <button 
+        mat-raised-button 
+        color="primary" 
+        type="submit" 
+        [disabled]="registroForm.invalid || loading">
+        <mat-spinner diameter="20" *ngIf="loading"></mat-spinner>
+        <span *ngIf="!loading">{{ isEditMode ? 'Actualizar' : 'Crear' }}</span>
+      </button>
+    </mat-dialog-actions>
+  </form>
+</div> 

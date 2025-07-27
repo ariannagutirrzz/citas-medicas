@@ -1,0 +1,85 @@
+<div class="citas-container">
+  <div class="header" fxLayout="row" fxLayoutAlign="space-between center">
+    <h2>Gestión de Citas</h2>
+    <button mat-raised-button color="primary" (click)="openCitaForm()">
+      <mat-icon>add</mat-icon>
+      Nueva Cita
+    </button>
+  </div>
+
+  <mat-card>
+    <mat-card-content>
+      <mat-form-field appearance="outline" class="search-field">
+        <mat-label>Buscar citas</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Buscar por paciente, doctor, motivo...">
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+
+      <div class="table-container mat-elevation-z8">
+        <table mat-table [dataSource]="dataSource" matSort>
+          <!-- Fecha Column -->
+          <ng-container matColumnDef="fecha">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha </th>
+            <td mat-cell *matCellDef="let cita"> {{ cita.fecha | date:'dd/MM/yyyy' }} </td>
+          </ng-container>
+
+          <!-- Hora Column -->
+          <ng-container matColumnDef="hora">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Hora </th>
+            <td mat-cell *matCellDef="let cita"> {{ cita.hora }} </td>
+          </ng-container>
+
+          <!-- Paciente Column -->
+          <ng-container matColumnDef="paciente">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Paciente </th>
+            <td mat-cell *matCellDef="let cita"> {{ getPacienteName(cita.id_paciente) }} </td>
+          </ng-container>
+
+          <!-- Doctor Column -->
+          <ng-container matColumnDef="doctor">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Doctor </th>
+            <td mat-cell *matCellDef="let cita"> {{ getDoctorName(cita.id_doctor) }} </td>
+          </ng-container>
+
+          <!-- Estado Column -->
+          <ng-container matColumnDef="es_activa">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Estado </th>
+            <td mat-cell *matCellDef="let cita">
+              <mat-chip-option [color]="getEstadoColor(cita.es_activa)" selected>
+                {{ getEstadoLabel(cita.es_activa) }}
+              </mat-chip-option>
+            </td>
+          </ng-container>
+
+          <!-- Acciones Column -->
+          <ng-container matColumnDef="acciones">
+            <th mat-header-cell *matHeaderCellDef> Acciones </th>
+            <td mat-cell *matCellDef="let cita">
+              <button mat-icon-button color="primary" (click)="editCita(cita)" matTooltip="Editar">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button color="warn" (click)="deleteCita(cita)" matTooltip="Eliminar">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Seleccionar página de citas"></mat-paginator>
+
+        <div class="loading-container" *ngIf="loading">
+          <mat-spinner></mat-spinner>
+          <p>Cargando citas...</p>
+        </div>
+
+        <div class="no-data" *ngIf="!loading && dataSource.data.length === 0">
+          <mat-icon>event_busy</mat-icon>
+          <p>No hay citas programadas</p>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div> 

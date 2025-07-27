@@ -1,0 +1,36 @@
+.paciente-form-container {
+  min-width: 500px;
+}
+
+mat-dialog-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+mat-dialog-content {
+  padding: 0;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+mat-dialog-actions {
+  padding: 16px 0;
+  margin: 0;
+}
+
+button[mat-raised-button] {
+  min-width: 120px;
+}
+
+mat-spinner {
+  margin-right: 8px;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 80px;
+} 

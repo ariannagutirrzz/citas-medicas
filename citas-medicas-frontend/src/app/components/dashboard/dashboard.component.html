@@ -1,0 +1,63 @@
+<app-navbar></app-navbar>
+
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport
+      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+      [mode]="(isHandset$ | async) ? 'over' : 'side'"
+      [opened]="(isHandset$ | async) === false">
+    <mat-toolbar>Menú</mat-toolbar>
+    <mat-nav-list>
+      <!-- Debug Info -->
+      <div style="padding: 10px; color: white; font-size: 12px;">
+        User: {{ authService.currentUserValue?.nombres }} {{ authService.currentUserValue?.apellidos }}
+        Role: {{ authService.currentUserValue?.roles }}
+      </div>
+      
+      <!-- Dashboard Home -->
+      <a mat-list-item routerLink="/dashboard" routerLinkActive="active-link">
+        <mat-icon matListItemIcon>dashboard</mat-icon>
+        <span matListItemTitle>Dashboard</span>
+      </a>
+      
+      <!-- Pacientes - Admin can see all, Pacientes can see their own -->
+      <a mat-list-item routerLink="/dashboard/pacientes" routerLinkActive="active-link" *ngIf="authService.hasAnyRole(['admin', 'paciente'])">
+        <mat-icon matListItemIcon>people</mat-icon>
+        <span matListItemTitle>Pacientes</span>
+      </a>
+      
+      <!-- Citas - All roles can see appointments -->
+      <a mat-list-item routerLink="/dashboard/citas" routerLinkActive="active-link" *ngIf="authService.hasAnyRole(['admin', 'doctor', 'paciente'])">
+        <mat-icon matListItemIcon>event</mat-icon>
+        <span matListItemTitle>Citas</span>
+      </a>
+      
+      <!-- Registros Médicos - Admin and Doctor can see -->
+      <a mat-list-item routerLink="/dashboard/registros" routerLinkActive="active-link" *ngIf="authService.hasAnyRole(['admin', 'doctor'])">
+        <mat-icon matListItemIcon>medical_services</mat-icon>
+        <span matListItemTitle>Registros Médicos</span>
+      </a>
+      
+      <!-- Usuarios - Only Admin can see -->
+      <a mat-list-item routerLink="/dashboard/usuarios" routerLinkActive="active-link" *ngIf="authService.hasRole('admin')">
+        <mat-icon matListItemIcon>admin_panel_settings</mat-icon>
+        <span matListItemTitle>Usuarios</span>
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content class="sidenav-content">
+    <mat-toolbar color="primary">
+      <button
+        type="button"
+        aria-label="Toggle sidenav"
+        mat-icon-button
+        (click)="drawer.toggle()"
+        *ngIf="isHandset$ | async">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      <span>Citas Médicas Express</span>
+    </mat-toolbar>
+    <div class="content">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container> 

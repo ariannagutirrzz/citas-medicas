@@ -1,0 +1,35 @@
+.cita-form-container {
+  padding: 20px;
+
+  h2 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    color: #333;
+
+    mat-icon {
+      color: #667eea;
+    }
+  }
+
+  form {
+    mat-dialog-content {
+      padding: 0;
+      margin-bottom: 20px;
+    }
+
+    mat-form-field {
+      width: 100%;
+    }
+
+    mat-dialog-actions {
+      padding: 0;
+      margin: 0;
+    }
+  }
+
+  .mat-mdc-dialog-content {
+    max-height: 65vh;
+  }
+} 
