@@ -4,12 +4,13 @@ import { Observable } from 'rxjs';
 import { Cita } from '../models/cita.model';
 import { Usuario } from '../models/usuario.model';
 import { Paciente } from '../models/paciente.model';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CitaService {
-  private apiUrl = 'http://localhost:3000/api/citas';
+  private apiUrl = `${environment.apiUrl}/citas`;
 
   constructor(private http: HttpClient) { }
 
@@ -39,10 +40,10 @@ export class CitaService {
 
   // Métodos para obtener doctores y pacientes
   getDoctores(): Observable<Usuario[]> {
-    return this.http.get<Usuario[]>('http://localhost:3000/api/usuarios/doctores');
+    return this.http.get<Usuario[]>(`${environment.apiUrl}/usuarios/doctores`);
   }
 
   getPacientes(): Observable<Paciente[]> {
-    return this.http.get<Paciente[]>('http://localhost:3000/api/pacientes');
+    return this.http.get<Paciente[]>(`${environment.apiUrl}/pacientes`);
   }
 } 

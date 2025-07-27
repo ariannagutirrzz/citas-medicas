@@ -3,12 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { RegistroMedico } from '../models/registroMedico.model';
 import { Paciente } from '../models/paciente.model';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RegistroService {
-  private apiUrl = 'http://localhost:3000/api/registros_medicos';
+  private apiUrl = `${environment.apiUrl}/registros_medicos`;
 
   constructor(private http: HttpClient) { }
 
@@ -34,6 +35,6 @@ export class RegistroService {
 
   // Método para obtener pacientes (para el select)
   getPacientes(): Observable<Paciente[]> {
-    return this.http.get<Paciente[]>('http://localhost:3000/api/pacientes');
+    return this.http.get<Paciente[]>(`${environment.apiUrl}/pacientes`);
   }
 } 
